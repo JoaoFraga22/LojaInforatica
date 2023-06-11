@@ -1,0 +1,25 @@
+<h1 class="mt-3">Computadores</h1>
+<hr>
+<ol>a
+    <li *ngFor="let computador of computadores">
+        <p>
+            {{computador.descricao | uppercase}} - <em>{{computador.marca}}</em>
+        </p>
+        <p *ngIf="computador.valor || computador.garantia">
+
+            <strong *ngIf="computador.valor">
+                Preço: {{computador.valor | currency: 'R$'}}
+            </strong>
+            
+            {{ computador.valor && computador.garantia ? '-' : ''}}
+
+            <em *ngIf="computador.garantia">
+                Garantia: computador.garantia Dias
+            </em>
+        </p>
+        <p>
+            <button class="btn btn-warning" [routerLink]="['/edicao', computador.id]">Editar</button>
+            <button class="btn btn-danger ms-1" (click)="remove(computador)">Excluir</button>
+        </p>
+    </li>
+</ol>

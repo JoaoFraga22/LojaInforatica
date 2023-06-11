@@ -1,0 +1,106 @@
+{
+  "nacionalidades": [
+    {
+      "id": 1,
+      "descricao": "Brasileiro (a)"
+    },
+    {
+      "id": 2,
+      "descricao": "Inglês"
+    },
+    {
+      "id": 3,
+      "descricao": "Estadunidense"
+    }
+  ],
+  "clientes": [
+    {
+      "nome": "João Fraga",
+      "genero": "M",
+      "dataNascimento": "2000-08-22",
+      "nacionalidade": {
+        "id": 1,
+        "descricao": "Brasileiro (a)"
+      },
+      "id": 2
+    },
+    {
+      "id": 3,
+      "nome": "Henrique Coan",
+      "dataNascimento": "1984-01-01",
+      "genero": "M"
+    },
+    {
+      "nome": "Douglinhas",
+      "genero": "M",
+      "dataNascimento": "2001-11-28",
+      "nacionalidade": {
+        "id": 1,
+        "descricao": "Brasileiro (a)"
+      },
+      "id": 4
+    },
+    {
+      "nome": "Mariana",
+      "genero": "F",
+      "dataNascimento": "1954-02-24",
+      "nacionalidade": {
+        "id": 2,
+        "descricao": "Inglês"
+      },
+      "id": 5
+    },
+    {
+      "nome": "cliente edotar",
+      "genero": "M",
+      "dataNascimento": "1970-01-15",
+      "nacionalidade": {
+        "id": 1,
+        "descricao": "Brasileiro (a)"
+      },
+      "id": 6
+    }
+  ],
+  "computadores": [
+    {
+      "id": 4,
+      "descricao": "Rizen 5 500 GB",
+      "marca": "AMD",
+      "valor": "10.99"
+    }
+  ],
+  "Marcas": [
+    {
+      "nome": "Nome qualquer",
+      "Sede": "",
+      "Data": "1970-01-01",
+      "Representante": "",
+      "contato": "",
+      "id": 2
+    },
+    {
+      "nome": "henrique",
+      "Sede": "",
+      "Data": "1970-01-01",
+      "Representante": "",
+      "contato": "",
+      "id": 3
+    },
+    {
+      "nome": "teste",
+      "Sede": "",
+      "Data": "1970-01-01",
+      "Representante": "",
+      "contato": "48912341234",
+      "id": 5
+    },
+    {
+      "nome": "marca",
+      "Sede": "",
+      "Data": "1970-01-01",
+      "Representante": "",
+      "contato": "123456789",
+      "id": 7
+    }
+  ]
+}
