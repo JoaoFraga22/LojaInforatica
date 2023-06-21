@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'computadores',
-    loadChildren: () => import('./computador/computador.module').then(m => m.ComputadorModule)
+    loadChildren: () => import('./clientes copy/cliente.module').then(m => m.computador1Module)
   },
   {
     path: 'clientes',

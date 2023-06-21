@@ -1,27 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ToastController, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
-import { ComputadorService } from '../../services/computador.service';
-import { ComputadorInterface } from '../../types/computador.interface';
+import { ClienteService } from '../../services/cliente.service';
+import { ClienteInterface } from '../../types/cliente.interface';
 
 @Component({
-  selector: 'app-computador-lista',
-  templateUrl: './computador-lista.component.html',
+  selector: 'app-cliente-list-page',
+  templateUrl: './cliente-list-page.component.html',
 })
-
-export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave, OnDestroy {
-  computadores: ComputadorInterface[] = [];
+export class ClienteListPageComponent implements ViewWillEnter, ViewDidLeave, OnDestroy {
+  clientes: ClienteInterface[] = [];
   subscriptions = new Subscription();
 
   constructor(
-    private computadorService: ComputadorService,
+    private clienteService: ClienteService,
     private alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
   ) { }
 
   ionViewDidLeave(): void {
-    this.computadores = [];
+    this.clientes = [];
   }
 
   ionViewWillEnter(): void {
@@ -36,12 +35,12 @@ export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave,
     const busyLoader = await this.loadingController.create({ spinner: 'circular' })
     busyLoader.present()
 
-    const subscription = this.computadorService.getComputadores()
-      .subscribe(async (computadores) => {
-        this.computadores = computadores;
+    const subscription = this.clienteService.getClientes()
+      .subscribe(async (clientes) => {
+        this.clientes = clientes;
         const toast = await this.toastController.create({
           color: 'success',
-          message: 'Lista de computadores carregada com sucesso!',
+          message: 'Lista de clientes carregada com sucesso!',
           duration: 15000,
           buttons: ['X']
         })
@@ -50,7 +49,7 @@ export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave,
       }, async () => {
         const alerta = await this.alertController.create({
           header: 'Erro',
-          message: 'Não foi possível carregar a lista de computadores',
+          message: 'Não foi possível carregar a lista de clientes',
           buttons: ['Ok']
         })
         alerta.present()
@@ -59,16 +58,16 @@ export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave,
     this.subscriptions.add(subscription);
   }
 
-  async remove(computadores: ComputadorInterface) {
+  async remove(cliente: ClienteInterface) {
     const alert = await this.alertController.create({
       header: 'Confirmação de exclusão',
-      message: `Deseja excluir o computador ${computadores.descricao}?`,
+      message: `Deseja excluir o cliente ${cliente.nome}?`,
       buttons: [
         {
           text: 'Sim',
           handler: () => {
             this.subscriptions.add(
-              this.computadorService.remove(computadores).subscribe(() => this.lista())
+              this.clienteService.remove(cliente).subscribe(() => this.lista())
             );
           },
         },
@@ -76,5 +75,15 @@ export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave,
       ],
     });
     alert.present();
+  }
+
+  favorite(cliente: ClienteInterface) {
+    const clientesFavoritesLocalStorage = window.localStorage.getItem('clientesFavoritos');
+    let arrayClientesFavoritos = clientesFavoritesLocalStorage ? JSON.parse(clientesFavoritesLocalStorage) : [];
+
+    const contain = arrayClientesFavoritos.some((a: ClienteInterface) => a.id === cliente.id);
+    arrayClientesFavoritos = contain ? arrayClientesFavoritos : [...arrayClientesFavoritos, cliente]
+
+    window.localStorage.setItem('clientesFavoritos', JSON.stringify(arrayClientesFavoritos))
   }
 }
