@@ -1,27 +1,9 @@
 {
-  "nacionalidades": [
-    {
-      "id": 1,
-      "descricao": "Brasileiro (a)"
-    },
-    {
-      "id": 2,
-      "descricao": "Inglês"
-    },
-    {
-      "id": 3,
-      "descricao": "Estadunidense"
-    }
-  ],
   "clientes": [
     {
       "nome": "João Fraga",
       "genero": "M",
       "dataNascimento": "2000-08-22",
-      "nacionalidade": {
-        "id": 1,
-        "descricao": "Brasileiro (a)"
-      },
       "id": 2
     },
     {
@@ -34,30 +16,18 @@
       "nome": "Douglinhas",
       "genero": "M",
       "dataNascimento": "2001-11-28",
-      "nacionalidade": {
-        "id": 1,
-        "descricao": "Brasileiro (a)"
-      },
       "id": 4
     },
     {
       "nome": "Mariana",
       "genero": "F",
       "dataNascimento": "1954-02-24",
-      "nacionalidade": {
-        "id": 2,
-        "descricao": "Inglês"
-      },
       "id": 5
     },
     {
       "nome": "cliente edotar",
       "genero": "M",
       "dataNascimento": "1970-01-15",
-      "nacionalidade": {
-        "id": 1,
-        "descricao": "Brasileiro (a)"
-      },
       "id": 6
     }
   ],

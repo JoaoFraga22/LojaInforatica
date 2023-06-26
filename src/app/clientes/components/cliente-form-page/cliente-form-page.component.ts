@@ -4,8 +4,6 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ClienteService } from '../../services/cliente.service';
 import { Subscription } from 'rxjs';
 import { AlertController, LoadingController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
-import { NacionalidadeInterface } from '../../types/nacionalidade.interface';
-import { NacionalidadeService } from '../../services/nacionalidade.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 
 @Component({
@@ -20,8 +18,7 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
   subscription = new Subscription()
   createMode: boolean = false;
   editMode: boolean = false;
-  id!: number
-  nacionalidades: NacionalidadeInterface[] = [];
+  id!: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,7 +26,6 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
     private formBuilder: FormBuilder,
     private clienteService: ClienteService,
     private alertController: AlertController,
-    private nacionalidadeService: NacionalidadeService,
     private loadingService: LoadingService,
   ) {
   }
@@ -50,18 +46,7 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
   ngOnInit(): void {
     this.loadingService
     this.initializeForm();
-    this.loadNacionalidades();
     this.loadClienteOnEditMode()
-  }
-
-  private async loadNacionalidades() {
-    this.loadingService.on();
-    this.subscription.add(
-      this.nacionalidadeService.getNacionalidades().subscribe((response) => {
-        this.nacionalidades = response;
-        this.loadingService.off();
-      })
-    );
   }
 
   private loadClienteOnEditMode() {
@@ -80,7 +65,6 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
             nome: cliente.nome,
             genero: cliente.genero,
             dataNascimento: cliente.dataNascimento,
-            nacionalidade: cliente.nacionalidade,
           })
           this.loadingService.off()
         })
@@ -101,7 +85,6 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
       ],
       genero: 'F',
       dataNascimento: '1970-01-01',
-      nacionalidade: '',
     })
   }
 
@@ -161,9 +144,5 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
 
   cancel(): void {
     this.router.navigate(['./clientes'])
-  }
-
-  compareWith(o1: NacionalidadeInterface, o2: NacionalidadeInterface) {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 }

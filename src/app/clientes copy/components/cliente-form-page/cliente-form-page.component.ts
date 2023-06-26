@@ -85,7 +85,6 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
       ],
       genero: 'F',
       dataNascimento: '1970-01-01',
-      nacionalidade: '',
     })
   }
 

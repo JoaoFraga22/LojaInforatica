@@ -49,14 +49,6 @@
           <ion-select-option value="M">Masculino</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
-        <ion-label>Nacionalidade</ion-label>
-        <ion-select [compareWith]="compareWith" formControlName="nacionalidade" placeholder="Informe a nacionalidade do cliente">
-          <ion-select-option *ngFor="let n of nacionalidades" [value]="n">
-            {{n.descricao}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
     </ion-list>
     <ion-fab horizontal="end" vertical="bottom" slot="fixed">
       <ion-fab-button (click)="save()" [disabled]="clienteForm.invalid">

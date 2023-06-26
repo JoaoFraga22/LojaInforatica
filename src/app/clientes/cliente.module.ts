@@ -8,11 +8,10 @@ import { ClienteFormPageComponent } from './components/cliente-form-page/cliente
 import { ClienteListPageComponent } from './components/cliente-list-page/cliente-list-page.component';
 import { ClienteService } from './services/cliente.service';
 import { ClienteFavoritosPageComponent } from './components/clientes-favoritos-page/clientes-favoritos-page.component';
-import { NacionalidadeService } from './services/nacionalidade.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, IonicModule, FormsModule, ReactiveFormsModule, ClienteRoutingModule],
   declarations: [ClienteListPageComponent, ClienteFormPageComponent, ClienteFavoritosPageComponent],
-  providers: [ClienteService, NacionalidadeService],
+  providers: [ClienteService],
 })
 export class ClienteModule {}
