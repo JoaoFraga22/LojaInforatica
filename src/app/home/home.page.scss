@@ -1,6 +1,37 @@
 ion-card{
    // display: flex;
     //flex-direction: column;
-    width: 22% !important; 
+    width: 25% !important; 
     margin: 5 !important;
   }
+
+ion-grid{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 30%;
+}
+
+ion-content {
+  --background: none;
+}
+
+body {
+  background: transparent;
+}
+  
+capacitator-google-map{
+  display: inline-block;
+  //position: absolute !important;
+  width: 10%;
+  height: 10%;
+  border-color: red;
+}
+
+#texto{
+  text-align: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
