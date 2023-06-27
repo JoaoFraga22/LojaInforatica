@@ -1,31 +1,35 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { MarcaService } from '../../services/marca.service';
+import { ComputadorService } from '../../services/computador.service';
 import { Subscription } from 'rxjs';
 import { AlertController, LoadingController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { MarcaInterface } from 'src/app/marca/types/marca.interface';
+import { MarcaService } from 'src/app/marca/services/marca.service';
 import { LoadingService } from 'src/app/shared/services/loading.service';
 
 @Component({
-  selector: 'app-marca-form-page',
-  templateUrl: './marca-form-page.component.html',
+  selector: 'app-computador-form-page',
+  templateUrl: './computador-form-page.component.html',
 })
-export class MarcaFormPageComponent implements OnInit, OnDestroy,
+export class ComputadorFormPageComponent implements OnInit, OnDestroy,
   ViewWillEnter, ViewDidEnter,
   ViewWillLeave, ViewDidLeave {
 
-  marcaForm!: FormGroup;
+  computadorForm!: FormGroup;
   subscription = new Subscription()
   createMode: boolean = false;
   editMode: boolean = false;
   id!: string;
+  marcas: MarcaInterface[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private marcaService: MarcaService,
+    private computadorService: ComputadorService,
     private alertController: AlertController,
+    private marcaService: MarcaService,
     private loadingService: LoadingService,
   ) {
   }
@@ -46,10 +50,21 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
   ngOnInit(): void {
     this.loadingService
     this.initializeForm();
-    this.loadMarcaOnEditMode()
+    this.loadMarcas;
+    this.loadComputadorOnEditMode()
   }
 
-  private loadMarcaOnEditMode() {
+  private async loadMarcas() {
+    this.loadingService.on();
+    this.subscription.add(
+      this.marcaService.getMarcas().subscribe((response) => {
+        this.marcas = response;
+        this.loadingService.off();
+      })
+    );
+  }
+
+  private loadComputadorOnEditMode() {
     const [url] = this.activatedRoute.snapshot.url;
     this.editMode = url.path === 'edicao';
     this.createMode = !this.editMode;
@@ -60,13 +75,12 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
 
       if (this.id !== '-1') {
         this.loadingService.on()
-        this.marcaService.getMarca(this.id).subscribe((marca) => {
-          this.marcaForm.patchValue({
-            nome: marca.nome,
-            sede: marca.sede,
-            data: marca.data,
-            representante: marca.representante,
-            contato: marca.contato,
+        this.computadorService.getComputador(this.id).subscribe((computador) => {
+          this.computadorForm.patchValue({
+            nome: computador.descricao,
+            marca: computador.marca,
+            valor: computador.valor,
+            garantia: computador.garantia
           })
           this.loadingService.off()
         })
@@ -75,26 +89,27 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
   }
 
   private initializeForm() {
-    this.marcaForm = this.formBuilder.group({
-      nome: ['Nome qualquer',
+    this.computadorForm = this.formBuilder.group({
+      nome: [
+        'Nome qualquer',
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(50),
-          this.validaNomeMarca(),
+          this.validaDescricaoComputador(),
         ]
       ],
-      Sede: '',
-      Data: '1970-01-01',
-      Representante: '',
-      contato: '' 
+      marca: '',
     })
   }
 
-  validaNomeMarca(): ValidatorFn {
+  validaDescricaoComputador(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value.toLowerCase();
-      if (value === 'Positivo') {
+      if (value === 'teste') {
+        return { invalidName: value }
+      }
+      if (value === 'xyz') {
         return { invalidName: value }
       }
       return null;
@@ -108,14 +123,14 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
   save(): void {
     if (this.createMode) {
       this.subscription.add(
-        this.marcaService.save(this.marcaForm.value).subscribe(
+        this.computadorService.save(this.computadorForm.value).subscribe(
           () => {
-            this.router.navigate(['./marcas'])
+            this.router.navigate(['./computadores'])
           },
           async () => {
             const alerta = await this.alertController.create({
               header: 'Erro',
-              message: 'Não foi possível salvar os dados do marca',
+              message: 'Não foi possível salvar os dados do computador',
               buttons: ['Ok']
             })
             alerta.present()
@@ -123,17 +138,17 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
         )
       )
     } else {
-      this.marcaService.update({
-        ...this.marcaForm.value,
+      this.computadorService.update({
+        ...this.computadorForm.value,
         id: this.id
       }).subscribe({
         next: () => {
-          this.router.navigate(['./marcas'])
+          this.router.navigate(['./computadores'])
         },
         error: async () => {
           const alerta = await this.alertController.create({
             header: 'Erro',
-            message: 'Não foi possível atualizar os dados do marca',
+            message: 'Não foi possível atualizar os dados do computador',
             buttons: ['Ok']
           })
           alerta.present()
@@ -143,6 +158,10 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
   }
 
   cancel(): void {
-    this.router.navigate(['./marcas'])
+    this.router.navigate(['./computadores'])
+  }
+
+  compareWith(o1: MarcaInterface, o2: MarcaInterface) {
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
   }
 }

@@ -9,7 +9,7 @@ export class ComputadorService {
   constructor(private http: HttpClient) { }
 
   getComputador(id: string): Observable<ComputadorInterface> {
-    return this.http.get<ComputadorInterface>(`${environment.apiUrl}/computadores/${id}`);
+    return this.http.get<ComputadorInterface>(`${environment.apiUrl}/computadores/${id.toString}`);
   }
 
   getComputadores(): Observable<ComputadorInterface[]> {

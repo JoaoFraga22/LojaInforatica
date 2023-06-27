@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Route, RouterModule } from "@angular/router";
-import { ComputadorCadastroComponent } from "./components/cadastro/computador-cadastro.component";
+import { ComputadorFormPageComponent } from "./components/cadastro/computador-form-page.component";
 import { ComputadorListPageComponent } from "./components/lista/computador-lista.component";
 
 const routes: Route[] = [
@@ -15,11 +15,11 @@ const routes: Route[] = [
     },
     {
         path: 'cadastro',
-        component: ComputadorCadastroComponent,
+        component: ComputadorFormPageComponent,
     },
     {
         path: 'edicao/:id',
-        component: ComputadorCadastroComponent
+        component: ComputadorFormPageComponent
     }
 ]
 

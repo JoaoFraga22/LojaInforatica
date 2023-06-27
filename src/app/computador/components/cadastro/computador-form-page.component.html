@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{createMode ? 'Cadastro ' : 'Edição ' }} de computadores
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="computadorForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Descrição:</ion-label>
+        <ion-input formControlName="descricao" placeholder="Digite a descrição do computador"></ion-input>
+        <ion-note slot="error" *ngIf="computadorForm.controls['descricao'].hasError('required')">
+          O campo é obrigatório
+        </ion-note>
+        <ion-note slot="error" *ngIf="computadorForm.controls['descricao'].hasError('minlength')">
+          O campo tem {{computadorForm.controls['descricao'].errors?.['minlength'].actualLength}} caracteres, entretanto deve
+          ter no mínimo {{computadorForm.controls['descricao'].errors?.['minlength'].requiredLength}} caracteres
+        </ion-note>
+        <ion-note slot="error" *ngIf="computadorForm.controls['descricao'].hasError('maxlength')">
+          O campo deve ter no máximo {{computadorForm.controls['descricao'].errors?.['maxlength'].requiredLength}} caracteres
+        </ion-note>
+        <ion-note slot="error" *ngIf="computadorForm.controls['descricao'].hasError('invalidName')">
+          A descrição do computador não pode conter o trecho de caracteres:
+          <strong>{{computadorForm.controls['descricao'].errors?.['invalidName']}}</strong>
+        </ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label>Marca</ion-label>
+        <ion-select [compareWith]="compareWith" formControlName="marca" placeholder="Informe a marca do computador">
+          <ion-select-option *ngFor="let m of marcas" [value]="m">
+            {{m.nome}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label> Data </ion-label>
+        <ion-datetime-button datetime="data"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime formControlName="data" id="data" presentation="date" showDefaultButtons="true"
+              doneText="Selecionar" cancelText="Cancelar" showDefaultTitle="true">
+              <span slot="title">Selecione a data</span>
+            </ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Valor:</ion-label>
+        <ion-input formControlName="valor" placeholder="Digite o valor do computador"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">garantia:</ion-label>
+        <ion-input formControlName="garantia" placeholder="Digite a garantia do computador"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button (click)="save()" [disabled]="computadorForm.invalid">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+      <ion-fab-button color="light" (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </form>
+</ion-content>
+
+<ion-footer>
+</ion-footer>
