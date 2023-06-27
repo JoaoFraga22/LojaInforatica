@@ -10,7 +10,7 @@ import { ComputadorInterface } from '../../types/computador.interface';
 })
 export class ComputadorCadastroComponent implements OnInit {
   computadorForm: FormGroup = this.formBuilder.group({
-    id: 0,
+    id: '0',
     nome: [
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(200)],

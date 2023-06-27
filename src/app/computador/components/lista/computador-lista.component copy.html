@@ -7,24 +7,61 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-content>
+<!--
+<ion-card>
+  <ion-card-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-card-title>Lista de computadores</ion-card-title>
+    <ion-card-subtitle>Pra ficar online!</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
     <ion-list>
-      <ion-item *ngFor="let cliente of clientes">
-        <ion-label>
-          {{ computador.nome }}
-        </ion-label>
-        <ion-icon name="heart" (click)="favorite(cliente)"></ion-icon>
+      <ion-item *ngFor="let computador of computadores"></ion-item>>
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>{{ computador.nome }}</ion-label>
         <ion-icon
           name="create"
           slot="end"
-          [routerLink]="['../edicao', cliente.id]"
+          [routerLink]="['../edicao', computador.id]"
         ></ion-icon>
-        <ion-icon name="trash" slot="end" (click)="remove(cliente)"></ion-icon>
+        <ion-icon name="trash" slot="end" (click)="remove(computador)"></ion-icon>
       </ion-item>
     </ion-list>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button [routerLink]="['../cadastro']">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
+  </ion-card-content>
+</ion-card>
+-->
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let computador of computadores">
+      <ion-card>
+        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+        <ion-card-header>
+          <ion-card-title>{{ computador.nome }}</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header> 
+      
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+      <ion-icon
+        name="create"
+        slot="end"
+        [routerLink]="['../edicao', computador.id]"
+      ></ion-icon>
+      <ion-icon name="trash" slot="end" (click)="remove(computador)"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button [routerLink]="['../cadastro']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

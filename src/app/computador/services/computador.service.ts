@@ -8,7 +8,7 @@ import { ComputadorInterface } from '../types/computador.interface';
 export class ComputadorService {
   constructor(private http: HttpClient) { }
 
-  getComputador(id: number): Observable<ComputadorInterface> {
+  getComputador(id: string): Observable<ComputadorInterface> {
     return this.http.get<ComputadorInterface>(`${environment.apiUrl}/computadores/${id}`);
   }
 

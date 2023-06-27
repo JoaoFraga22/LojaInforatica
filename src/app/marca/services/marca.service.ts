@@ -8,7 +8,7 @@ import { MarcaInterface } from '../types/marca.interface';
 export class MarcaService {
   constructor(private httpClient: HttpClient) { }
 
-  getMarca(id: number): Observable<MarcaInterface> {
+  getMarca(id: string): Observable<MarcaInterface> {
     return this.httpClient.get<MarcaInterface>(
       `${environment.apiUrl}/marcas/${id}`
     )

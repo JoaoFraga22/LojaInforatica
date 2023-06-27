@@ -1,5 +1,5 @@
 export interface MarcaInterface {
-    id: number
+    id: string
     nome: string
     sede: string
     data: string

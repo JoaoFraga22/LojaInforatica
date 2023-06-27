@@ -8,7 +8,7 @@ import { ClienteInterface } from '../types/cliente.interface';
 export class ClienteService {
   constructor(private httpClient: HttpClient) { }
 
-  getCliente(id: number): Observable<ClienteInterface> {
+  getCliente(id: string): Observable<ClienteInterface> {
     return this.httpClient.get<ClienteInterface>(
       `${environment.apiUrl}/clientes/${id}`
     )

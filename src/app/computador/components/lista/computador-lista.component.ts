@@ -63,8 +63,7 @@ export class ComputadorListPageComponent implements ViewWillEnter, ViewDidLeave,
     const alert = await this.alertController.create({
       header: 'Confirmação de exclusão',
       message: `Deseja excluir o computador ${computadores.descricao}?`,
-      buttons: [
-        {
+      buttons: [{
           text: 'Sim',
           handler: () => {
             this.subscriptions.add(

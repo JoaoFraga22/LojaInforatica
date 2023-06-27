@@ -1,5 +1,5 @@
 export interface ComputadorInterface {
-    id?: number;
+    id?: string;
     descricao: string,
     marca: string,
     valor?: number,

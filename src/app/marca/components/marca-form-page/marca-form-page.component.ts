@@ -18,7 +18,7 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
   subscription = new Subscription()
   createMode: boolean = false;
   editMode: boolean = false;
-  id!: number
+  id!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,9 +56,9 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
 
     if (this.editMode) {
       const id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.id = id ? parseInt(id) : -1;
+      this.id = id ? id : '-1';
 
-      if (this.id !== -1) {
+      if (this.id !== '-1') {
         this.loadingService.on()
         this.marcaService.getMarca(this.id).subscribe((marca) => {
           this.marcaForm.patchValue({
@@ -74,8 +74,7 @@ export class MarcaFormPageComponent implements OnInit, OnDestroy,
 
   private initializeForm() {
     this.marcaForm = this.formBuilder.group({
-      nome: [
-        'Nome qualquer',
+      nome: ['Nome qualquer',
         [
           Validators.required,
           Validators.minLength(3),

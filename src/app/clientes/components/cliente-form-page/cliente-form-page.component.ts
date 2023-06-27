@@ -18,7 +18,7 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
   subscription = new Subscription()
   createMode: boolean = false;
   editMode: boolean = false;
-  id!: number;
+  id!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,15 +56,16 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
 
     if (this.editMode) {
       const id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.id = id ? parseInt(id) : -1;
+      this.id = id ? id : '-1';
 
-      if (this.id !== -1) {
+      if (this.id !== '-1') {
         this.loadingService.on()
         this.clienteService.getCliente(this.id).subscribe((cliente) => {
           this.clienteForm.patchValue({
             nome: cliente.nome,
             genero: cliente.genero,
             dataNascimento: cliente.dataNascimento,
+            email: cliente.email,
           })
           this.loadingService.off()
         })
@@ -85,6 +86,7 @@ export class ClienteFormPageComponent implements OnInit, OnDestroy,
       ],
       genero: 'F',
       dataNascimento: '1970-01-01',
+      email: '',
     })
   }
 

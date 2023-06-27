@@ -3,4 +3,5 @@ export interface ClienteInterface {
     nome: string
     genero: string
     dataNascimento?: string
+    email: string;
 }
